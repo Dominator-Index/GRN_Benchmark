@@ -1,0 +1,12 @@
+{
+  "network_name": "insilico_size100_1",
+  "num_genes": 100,
+  "num_edges": 176,
+  "num_activation_edges": 157,
+  "num_repression_edges": 19,
+  "edge_density": 0.017777777777777778,
+  "avg_in_degree": 1.76,
+  "avg_out_degree": 1.76,
+  "max_in_degree": 7,
+  "max_out_degree": 24
+}

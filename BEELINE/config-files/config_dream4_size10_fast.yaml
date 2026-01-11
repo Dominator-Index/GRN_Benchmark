@@ -1,0 +1,105 @@
+# BEELINE Config for Dream4 - Fast Testing Mode
+# Only runs 3 fastest and most reliable algorithms for binary data
+# Estimated time: 5-10 minutes
+
+input_settings:
+    input_dir: "inputs"
+    dataset_dir: "dream4"
+    
+    datasets:
+        - name: "insilico_size10_1"
+          exprData: "ExpressionData.csv"
+          cellData: "PseudoTime.csv"
+          trueEdges: "refNetwork.csv"
+
+    algorithms:
+        # Top 3 algorithms for binary/discrete data
+        # These are tree-based or information-theoretic methods
+        
+        - name: "PIDC"
+          params: 
+              should_run: [True]
+              # Partial Information Decomposition & Context
+              # Best for discrete data, uses information theory
+
+        - name: "GENIE3"
+          params: 
+              should_run: [True]
+              # Random Forest method, very robust
+              
+        - name: "GRNBOOST2"
+          params: 
+              should_run: [True]
+              # Gradient Boosting, faster than GENIE3
+
+        - name: "PPCOR"
+          params: 
+              should_run: [True]
+              pVal: [0.01]
+
+        # All other algorithms disabled for fast testing
+        - name: "GRNVBEM"
+          params: 
+              should_run: [False]
+
+        - name: "SCNS"
+          params: 
+              should_run: [False]
+
+        - name: "GRISLI"
+          params: 
+              should_run: [False]
+              L: [10]
+              R: [3000]
+              alphaMin: [0.0]
+
+        - name: "SINGE"
+          params: 
+              should_run: [False]
+              lambda: [0.01]
+              dT: [15]
+              num_lags: [5]
+              kernel_width: [0.5]
+              prob_zero_removal: [0]
+              prob_remove_samples: [0.0]
+              family: ["gaussian"]
+              num_replicates: [6]
+
+        - name: "SCSGL"
+          params:
+              should_run: [False]
+              pos_density: [0.45]
+              neg_density: [0.45]
+              assoc: ["correlation"]
+
+        # Time-series dependent (not suitable for our data)
+        - name: "SCODE"
+          params:
+              should_run: [False]
+              z: [10]
+              nIter: [1000]
+              nRep: [6]
+
+        - name: "SINCERITIES"
+          params: 
+              should_run: [False]
+              nBins: [10]
+              
+        - name: "LEAP"
+          params: 
+              should_run: [False]
+              maxLag: [0.33]
+
+        - name: "SCRIBE"
+          params: 
+              should_run: [False]
+              delay: ["5"]
+              method: ['ucRDI']
+              lowerDetectionLimit: [0]
+              expressionFamily: ['uninormal']
+              log: [False]
+              ignorePT: [True]
+
+output_settings:
+    output_dir: "outputs"
+    output_prefix: "Dream4_size10_fast"

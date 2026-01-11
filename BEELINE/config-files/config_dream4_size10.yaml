@@ -1,0 +1,106 @@
+# BEELINE Config for Dream4 insilico_size10_1 dataset
+# Binary expression data (0/1), 10 genes, 10000 samples
+
+input_settings:
+    # Base input directory
+    input_dir: "inputs"
+
+    # Subdirectory containing Dream4 datasets
+    dataset_dir: "dream4"
+
+    # Explicitly specify the dataset
+    datasets:
+        - name: "insilico_size10_1"
+          exprData: "ExpressionData.csv"
+          cellData: "PseudoTime.csv"
+          trueEdges: "refNetwork.csv"
+
+    # Select algorithms to run
+    # Note: For binary data, some algorithms work better than others
+    algorithms:
+        # Correlation-based methods (work with binary data)
+        - name: "PIDC"
+          params: 
+              should_run: [True]
+
+        - name: "GENIE3"
+          params: 
+              should_run: [True]
+              
+        - name: "GRNBOOST2"
+          params: 
+              should_run: [True]
+              
+        - name: "PPCOR"
+          params: 
+              should_run: [True]
+              pVal: [0.01]
+
+        # Time-series based (may skip or give warnings with dummy time)
+        - name: "SCODE"
+          params:
+              should_run: [False]  # Requires real pseudotime
+              z: [10]
+              nIter: [1000]
+              nRep: [6]
+
+        - name: "SINCERITIES"
+          params: 
+              should_run: [False]  # Requires real pseudotime
+              nBins: [10]
+              
+        - name: "LEAP"
+          params: 
+              should_run: [False]  # Requires real pseudotime
+              maxLag: [0.33]
+
+        # Bayesian methods
+        - name: "GRNVBEM"
+          params: 
+              should_run: [True]
+
+        - name: "SCNS"
+          params: 
+              should_run: [True]
+
+        # Other methods
+        - name: "GRISLI"
+          params: 
+              should_run: [True]
+              L: [10]
+              R: [3000]
+              alphaMin: [0.0]
+
+        - name: "SINGE"
+          params: 
+              should_run: [True]
+              lambda: [0.01]
+              dT: [15]
+              num_lags: [5]
+              kernel_width: [0.5]
+              prob_zero_removal: [0]
+              prob_remove_samples: [0.0]
+              family: ["gaussian"]
+              num_replicates: [6]
+
+        - name: "SCRIBE"
+          params: 
+              should_run: [False]  # May not work well with binary data
+              delay: ["5"]
+              method: ['ucRDI']
+              lowerDetectionLimit: [0]
+              expressionFamily: ['uninormal']
+              log: [False]
+              ignorePT: [True]
+
+        - name: "SCSGL"
+          params:
+              should_run: [True]
+              pos_density: [0.45]
+              neg_density: [0.45]
+              assoc: ["correlation"]
+
+output_settings:
+    # Base output directory
+    output_dir: "outputs"
+    output_prefix: "Dream4_insilico_size10_1"
